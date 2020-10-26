@@ -22,8 +22,7 @@ const validationSchema = yup.object().shape({
         .required('Password is required'),
 });
 
-const LoginForm = ({onSubmit, error, touched}) => { 
-    console.log(error);
+const LoginForm = ({onSubmit, error, touched}) => {     
     return (
         <View style={{justifyContent:'center'}}>
             <FormikTextInput name="username" placeholder="Username" style={[styles.input, error.username && touched.username?styles.error:null]}/>
@@ -32,7 +31,6 @@ const LoginForm = ({onSubmit, error, touched}) => {
                 <Text style={styles.button}>Login</Text>
             </TouchableWithoutFeedback>
         </View>
-        
     );
 };
 
