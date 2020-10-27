@@ -5,6 +5,7 @@ import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 
 import FormikTextInput from './FormikTextInput';
 import Text from './Text';
+import useSignIn from '../hooks/useSignIn';
 
 const initialValues = {
     username: '',
@@ -14,7 +15,7 @@ const initialValues = {
 const validationSchema = yup.object().shape({
     username: yup
         .string()
-        .min(5, 'Username length must be 5 characters or more')
+        .min(4, 'Username length must be 4 characters or more')
         .required('Username is required'),
     password: yup
         .string()
@@ -35,9 +36,18 @@ const LoginForm = ({onSubmit, error, touched}) => {
 };
 
 const SignIn = () => {
-    const onSubmit = values => {
-        console.log(values);
+    const [signIn] = useSignIn();
+
+    const onSubmit = async values => {
+       const { username, password } = values;       
+       try {
+        const {data} = await signIn({ username, password });
+        console.log(data);
+      } catch (e) {
+        console.log(e);
+      }
     };
+    
 
     return (
         <Formik 
