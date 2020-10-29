@@ -5,9 +5,10 @@ import { Link } from 'react-router-native';
 import Text from './Text';
 
 
-const AppBarTab = ({tabText, link}) => {
+const SignOut = ({tabText, link, signOut}) => {
+
     return (
-        <Link to={link} component={TouchableWithoutFeedback} >            
+        <Link to={link} component={TouchableWithoutFeedback} onPress={signOut}>            
                 <Text appBarButton='appBarButton' style={{padding: 10}}>
                     {tabText}
                 </Text>
@@ -15,4 +16,4 @@ const AppBarTab = ({tabText, link}) => {
     );
 };
 
-export default AppBarTab;
+export default SignOut;

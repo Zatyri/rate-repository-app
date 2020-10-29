@@ -1,16 +1,19 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import useSignOut from '../hooks/useSignOut';
 
 import AppBarTab from './AppBarTab';
+import SignOut from './SignOut';
 
 const AppBar = () => {
+    const [user, signOut] = useSignOut();    
+
     return (
         <View style={styles.container}>
             <ScrollView horizontal={true}>
               <AppBarTab tabText='Repositories' link={"/"} />
-              <AppBarTab tabText='Login' link={"/signin"} />
+              {!user ? <AppBarTab tabText='Login' link={"/signin"} /> : <SignOut tabText='Logout' link={'/'} signOut={signOut}/>}
             </ScrollView>
-
         </View>
     );
 };
@@ -23,7 +26,6 @@ const styles = StyleSheet.create({
       justifyContent: "space-around",
       alignItems: "center",
     },
-    // ...
   });
 
 export default AppBar;

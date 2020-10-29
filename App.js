@@ -4,14 +4,20 @@ import { ApolloProvider } from '@apollo/react-hooks';
 
 import Main from './src/compnents/Main';
 import createApolloClient from './src/utils/apolloClient';
+import AuthStorage from './src/utils/authStorage';
+import AuthStorageContext from './src/context/AuthStorageContext';
 
-const apolloClient = createApolloClient();
+const authStorage = new AuthStorage();
+
+const apolloClient = createApolloClient(authStorage);
 
 const App = () =>  { 
   return (
     <NativeRouter>
       <ApolloProvider client={apolloClient}>
-        <Main/>
+        <AuthStorageContext.Provider value={authStorage}>
+          <Main/>
+        </AuthStorageContext.Provider>       
       </ApolloProvider>  
     </NativeRouter>
   
