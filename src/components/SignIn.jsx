@@ -27,17 +27,16 @@ const validationSchema = yup.object().shape({
 const LoginForm = ({onSubmit, error, touched}) => {     
     return (
         <View style={{justifyContent:'center'}}>
-            <FormikTextInput name="username" placeholder="Username" style={[styles.input, error.username && touched.username?styles.error:null]}/>
-            <FormikTextInput name="password" placeholder="Password" secureTextEntry={true} style={[styles.input, error.password && touched.password ? styles.error : null]}/>
-            <TouchableWithoutFeedback onPress={onSubmit} >
+            <FormikTextInput name="username" placeholder="Username" style={[styles.input, error.username && touched.username?styles.error:null]} testID='username' />
+            <FormikTextInput name="password" placeholder="Password" secureTextEntry={true} style={[styles.input, error.password && touched.password ? styles.error : null]} testID='password' />
+            <TouchableWithoutFeedback onPress={onSubmit} testID='submitButton'>
                 <Text style={styles.button}>Login</Text>
             </TouchableWithoutFeedback>
         </View>
     );
 };
 
-const SignIn = () => {
-    const [signIn] = useSignIn();
+export const SignInContainer = ({signIn}) => {    
     const history = useHistory();   
 
     const onSubmit = async values => {
@@ -50,7 +49,6 @@ const SignIn = () => {
         console.log(e);
       }
     };
-    
 
     return (
         <Formik 
@@ -61,6 +59,11 @@ const SignIn = () => {
             {({handleSubmit, errors, touched}) => <LoginForm onSubmit={handleSubmit} error={errors} touched={touched}/>}
         </Formik>
     );
+};
+
+const SignIn = () => {
+    const [signIn] = useSignIn();     
+    return <SignInContainer signIn={signIn}/>;
 };
 
 const styles = StyleSheet.create({

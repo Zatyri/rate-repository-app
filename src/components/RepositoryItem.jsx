@@ -32,27 +32,27 @@ const RepositoryItem = ({repository}) => {
             <View style={styles.row} >
                 <Image style={styles.logo} source={{uri: ownerAvatarUrl}} />
                 <View>
-                    <Text fontSize='subheading' fontWeight='bold' style={{paddingLeft: 10}} >{fullName}</Text>
-                    <Text color='textSecondary' style={{paddingLeft: 10}}>{description}</Text>
+                    <Text fontSize='subheading' fontWeight='bold' style={{paddingLeft: 10}} testID='nameField' >{fullName}</Text>
+                    <Text color='textSecondary' style={{paddingLeft: 10}} testID='description'>{description}</Text>
                 </View>
             </View>
-            <Text style={styles.language}>{language}</Text> 
+            <Text style={styles.language} testID='language'>{language}</Text> 
             <View style={styles.miniRow} >
                 <View>
-                    <Text color='textSecondary'>Stars</Text>
-                    <Text fontWeight='bold'>{stargazersCount}</Text>
+                    <Text color='textSecondary' >Stars</Text>
+                    <Text fontWeight='bold' testID='stars'>{stargazersCount}</Text>
                 </View>  
                 <View>
                     <Text color='textSecondary'>Forks</Text>
-                    <Text fontWeight='bold'>{forksCount}</Text>
+                    <Text fontWeight='bold' testID='forks'>{forksCount}</Text>
                 </View>  
                 <View>
                     <Text color='textSecondary'>Reviews</Text>
-                    <Text fontWeight='bold'>{reviewCount}</Text>
+                    <Text fontWeight='bold' testID='review'>{reviewCount}</Text>
                 </View>  
                 <View>
                     <Text color='textSecondary'>Rating</Text>
-                    <Text fontWeight='bold'>{ratingAverage}</Text>
+                    <Text fontWeight='bold' testID='rating'>{ratingAverage}</Text>
                 </View>  
             </View>       
         </View>
