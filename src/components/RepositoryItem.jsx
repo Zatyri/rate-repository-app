@@ -1,16 +1,32 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Button } from 'react-native';
 import Text from './Text';
+import { Link, useHistory } from 'react-router-native';
+import * as Linking from 'expo-linking';
 
-const RepositoryItem = ({repository}) => {
-    let {fullName, 
+const RepositoryItem = ({repository, loading, showLink}) => {
+    let history = useHistory();
+
+    if(loading){
+        return null;
+    }
+
+    if(repository.repository){
+        repository = repository.repository;
+    }
+
+    
+    let {
+        id,
+        fullName, 
         description, 
         language, 
         forksCount, 
         stargazersCount,
         ratingAverage,
         reviewCount,
-        ownerAvatarUrl
+        ownerAvatarUrl,
+        url
     } = repository;
 
     if(forksCount >= 1000){
@@ -26,35 +42,47 @@ const RepositoryItem = ({repository}) => {
         reviewCount = Number.parseFloat(reviewCount/1000).toFixed(1) + 'k';
     }
 
+    const handlePress = () => {
+        history.push(`/${id}`);        
+    };
+
+    const linkToGithub = () => {
+        Linking.openURL(url);
+    };
+
+
 
     return (
         <View style={styles.container}>
-            <View style={styles.row} >
-                <Image style={styles.logo} source={{uri: ownerAvatarUrl}} />
-                <View>
-                    <Text fontSize='subheading' fontWeight='bold' style={{paddingLeft: 10}} testID='nameField' >{fullName}</Text>
-                    <Text color='textSecondary' style={{paddingLeft: 10}} testID='description'>{description}</Text>
+            <Link component={TouchableOpacity} to={`/${id}`} onPress={handlePress} >
+                <View style={styles.row} >
+                    <Image style={styles.logo} source={{uri: ownerAvatarUrl}} />
+                    <View>
+                        <Text fontSize='subheading' fontWeight='bold' style={{paddingLeft: 10}} testID='nameField' >{fullName}</Text>
+                        <Text color='textSecondary' style={{paddingLeft: 10}} testID='description'>{description}</Text>
+                    </View>
                 </View>
-            </View>
-            <Text style={styles.language} testID='language'>{language}</Text> 
-            <View style={styles.miniRow} >
-                <View>
-                    <Text color='textSecondary' >Stars</Text>
-                    <Text fontWeight='bold' testID='stars'>{stargazersCount}</Text>
-                </View>  
-                <View>
-                    <Text color='textSecondary'>Forks</Text>
-                    <Text fontWeight='bold' testID='forks'>{forksCount}</Text>
-                </View>  
-                <View>
-                    <Text color='textSecondary'>Reviews</Text>
-                    <Text fontWeight='bold' testID='review'>{reviewCount}</Text>
-                </View>  
-                <View>
-                    <Text color='textSecondary'>Rating</Text>
-                    <Text fontWeight='bold' testID='rating'>{ratingAverage}</Text>
-                </View>  
-            </View>       
+                <Text style={styles.language} testID='language'>{language}</Text> 
+                <View style={styles.miniRow} >
+                    <View>
+                        <Text color='textSecondary' >Stars</Text>
+                        <Text fontWeight='bold' testID='stars'>{stargazersCount}</Text>
+                    </View>  
+                    <View>
+                        <Text color='textSecondary'>Forks</Text>
+                        <Text fontWeight='bold' testID='forks'>{forksCount}</Text>
+                    </View>  
+                    <View>
+                        <Text color='textSecondary'>Reviews</Text>
+                        <Text fontWeight='bold' testID='review'>{reviewCount}</Text>
+                    </View>  
+                    <View>
+                        <Text color='textSecondary'>Rating</Text>
+                        <Text fontWeight='bold' testID='rating'>{ratingAverage}</Text>
+                    </View>  
+                </View>
+                {showLink?<Button onPress={linkToGithub} title='Open GitHub'/>:null}
+            </Link>
         </View>
     );
 };

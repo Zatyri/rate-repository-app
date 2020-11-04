@@ -13,6 +13,7 @@ export const REPOSITORY = gql`
     description
     language
     stargazersCount
+    url
   }
 `;
 
